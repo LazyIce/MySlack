@@ -1,9 +1,22 @@
 import express from 'express';
+import { ApolloServer } from 'apollo-server-express';
 
-import SERVER from './schema';
+import TYPEDEFS from './schema';
+import RESOLVERS from './resolvers';
 import models from './models';
 
 const APP = express();
+
+const SERVER = new ApolloServer({
+    typeDefs: TYPEDEFS,
+    resolvers: RESOLVERS,
+    playground: {
+        endpoint: `http://localhost:8181/graphql`,
+        settings: {
+            'editor.theme': 'light'
+        }
+    }
+});
 
 SERVER.applyMiddleware({
     app: APP

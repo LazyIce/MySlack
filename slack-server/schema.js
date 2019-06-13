@@ -1,17 +1,33 @@
-import { ApolloServer } from 'apollo-server-express';
+import { gql } from 'apollo-server-express';
 
-import TYPEDEFS from './types';
-import RESOLVERS from './resolvers';
-
-const SERVER = new ApolloServer({
-    typeDefs: TYPEDEFS,
-    resolvers: RESOLVERS,
-    playground: {
-        endpoint: `http://localhost:8181/graphql`,
-        settings: {
-            'editor.theme': 'light'
-        }
+const TYPEDEFS = gql`
+    type Team {
+        owner: User!
+        members: [User!]!
+        channels: [Channel!]!
     }
-});
+    
+    type Channel {
+        id: Int!
+        name: String!
+        public: Boolean!
+        messages: [Message!]!
+        users: [User!]!
+    }
 
-export default SERVER;
+    type Message {
+        id: Int!
+        text: String!
+        user: User!
+        channel: Channel!
+    }
+
+    type User {
+        id: Int!
+        username: String!
+        email: String!
+        teams: [Team!]!
+    }
+`;
+
+export default TYPEDEFS;
