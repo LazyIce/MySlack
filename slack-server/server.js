@@ -1,15 +1,17 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
 
-import TYPEDEFS from './schema';
-import RESOLVERS from './resolvers';
 import models from './models';
+
+const typeDefs = mergeTypes(fileLoader(path.join(__dirname, './schema')));
+const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers')));
 
 const APP = express();
 
 const SERVER = new ApolloServer({
-    typeDefs: TYPEDEFS,
-    resolvers: RESOLVERS,
+    typeDefs: typeDefs,
+    resolvers: resolvers,
     playground: {
         endpoint: `http://localhost:8181/graphql`,
         settings: {
