@@ -9,7 +9,7 @@ const typeDefs = mergeTypes(fileLoader(path.join(__dirname, './schema')));
 const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers')));
 
 const APP = express();
-APP.use(cors(*));
+APP.use(cors('*'));
 
 const SERVER = new ApolloServer({
     typeDefs: typeDefs,
